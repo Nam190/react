@@ -1,0 +1,39 @@
+﻿@model IEnumerable<LvnBaiKiemTraGK.Models.lvnKhoa>
+
+@{
+    ViewBag.Title = "LvnIndex";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Lvn:Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LvnTenKH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Lvn_Trang_Thai)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.LvnTenKH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Lvn_Trang_Thai)
+        </td>
+        <td>
+            @Html.ActionLink("Lvn:Edit", "LvnEdit", new { id=item.LvnMaKH.Trim() }) |
+            @Html.ActionLink("Lvn:Details", "LvnDetails", new { id=item.LvnMaKH.Trim( }) |
+            @Html.ActionLink("Lvn:Delete", "LvnDelete", new { id=item.LvnMaKH.Trim( })
+        </td>
+    </tr>
+}
+
+</table>
