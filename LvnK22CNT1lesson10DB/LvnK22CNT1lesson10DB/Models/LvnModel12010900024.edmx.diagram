@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5cfb0fd12d094adcad28b4760d29ef9d" Name="Diagram1">
+        <EntityTypeShape EntityType="LvnK22CNT1Lesson10DbModel.KetQua" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LvnK22CNT1Lesson10DbModel.Khoa" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LvnK22CNT1Lesson10DbModel.MonHoc" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LvnK22CNT1Lesson10DbModel.SinhVien" Width="1.5" PointX="6.125" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LvnK22CNT1Lesson10DbModel.sysdiagrams" Width="1.5" PointX="3.375" PointY="3.75" />
+        <AssociationConnector Association="LvnK22CNT1Lesson10DbModel.FK_KetQua_MonHoc" />
+        <AssociationConnector Association="LvnK22CNT1Lesson10DbModel.FK_KetQua_SinhVien" />
+        <AssociationConnector Association="LvnK22CNT1Lesson10DbModel.FK_SinhVien_Khoa" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
