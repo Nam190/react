@@ -1,69 +1,72 @@
+import React, { useState, useEffect } from 'react';
+import axios from './api/lvnApi';
+import LvnFormAddOrEdit from './components/lvnFormAddOrEdit.';
+import LvnListSinhVien from './components/lvnListSinhVien.';
+const LvnApp = () => {
+  const [lvnListSinhVien, setLvnListSinhVien] = useState([]);
 
-import './App.css';
-import LvnListSinhVien from './components/LvnListSinhVien';
-import axios from './api/lvnApi'
-import { useEffect, useState } from 'react';
-import LvnFormAddOrEdit from './components/LvnFormAddOrEdit';
-function LvnApp() {
-  
-  const [lvnListSinhVien,setLvnListSinhVien] = useState([]);
-
-  // đọc dữ liệu từ api
-  const lvnGetAllSinhVien = async  ()=>{
-    const lvnResponse = await axios.get("lvnSinhVien");
-    console.log("Api Data:",lvnResponse.data);
-    setLvnListSinhVien(lvnResponse.data)
+  // Hàm để lấy dữ liệu từ API
+  const lvnGetAllStudent = async () => {
+    try {
+      const response = await axios.get("lvnSinhVien");
+      console.log("API Data:", response.data);
+      setLvnListSinhVien(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   }
 
-  
-  useEffect(()=>{
-    lvnGetAllSinhVien();
-    console.log("State Data:",lvnListSinhVien);
-  },[])
+  useEffect(() => {
+    lvnGetAllStudent();
+    console.log("State Data:", lvnListSinhVien);
+  }, []); // Dùng mảng rỗng để effect chỉ chạy một lần khi component mount
 
-  const [lvnAddOrEdit, setLvnAddOrEdit] = useState(false);
-  const lvnInitSinhViens = {
-      MaSV: "2010900024",
-      HoSV: "Lưu Viết",
-      TenSV: "Nam",
-      Phai: "123456789",
-      NgaySinh:"10/10/2002",
-      NoiSinh:"Hà Nội",
-      MaKH:"01",
-      HocBong:"Toàn Phần",
-      DiemTrungBinh:"9",
-      id: "24"
-  }
-  const [lvnSinhViens, setLvnSinhViens] = useState(lvnInitSinhViens);
+  const [LvnFormAddOrEdit, setLvnFormAddOrEdit] = useState(false);
 
-  // Hàm xử lý nút thêm mới
-  const lvnHandleAddNew = ()=>{
-    setLvnAddOrEdit(true);
+  const lvnInitStudent = {
+    lvnHoSV: "Lưu",
+    lvnTenSV: "Viet Nam",
+    lvnPhai: true,
+    lvnNgaySinh: 10102002,
+    lvnNoiSinh: "Hà Nội",
+    lvnMaKH: "11",
+    lvnHocBong: "Toàn Phần",
+    lvnDiemTrungBinh: "9",
+    lvnMaSV: "2010900024"
   }
-  const lvnHandleClose=(param)=>{
-    setLvnAddOrEdit(param);
+
+  const [lvnStudent,setLvnStudent] = useState(lvnInitStudent);
+
+  // Hàm xử lý khi thêm mới
+  const lvnHandleAddNew = () => {
+    setLvnFormAddOrEdit(true);
   }
-  const lvnHandleSubmit =(param)=>{
-    lvnGetAllUsers();
-    setLvnAddOrEdit(param);
+
+  const lvnHandleClose = (param) => {
+    setLvnFormAddOrEdit(param);
   }
-  const lvnHandleDelete=()=>{
-    lvnGetAllSinhVien();
+
+  const lvnHandleSubmit = (param) => {
+    lvnGetAllStudent();
+    setLvnFormAddOrEdit(param);
   }
-  let lvnElementForm = lvnAddOrEdit===true?
-      <LvnFormAddOrEdit renderSinhVien={lvnSinhViens} 
-                        onLvnClose={lvnHandleClose}
-                        onLvnSubmitForm={lvnHandleSubmit}/>:"";
+
+  const lvnHandleDelete = () => {
+    lvnGetAllStudent();
+  };
+
+  let lvnElementForm = LvnFormAddOrEdit === true ? <LvnFormAddOrEdit renderStudent={lvnStudent} onLvnClose={lvnHandleClose} onLvnSubmitForm={lvnHandleSubmit} /> : null;
+
   return (
-    <div className="container border my-3">
-        <h1>Làm việc với MockApi</h1>
-        <hr/>
-        <LvnListUsers  renderLvnListSinhVien={lvnListSinhVien} onLvnDelete={lvnHandleDelete}/>
-        <button className='btn btn-primary' name='btnLvnThemMoi' onClick={lvnHandleAddNew}>Thêm mới</button>
-        <hr/>
-        {lvnElementForm}
+    <div className='container border my-3'>
+      <h1>Làm việc với API</h1>
+      <hr />
+      <LvnListSinhVien renderlvnListSinhVien={lvnListSinhVien} onLvnDelete={lvnHandleDelete} />
+      <button className='btn btn-primary' onClick={lvnHandleAddNew}>Thêm mới</button>
+      <hr />
+      {lvnElementForm}
     </div>
-  );
+  )
 }
 
 export default LvnApp;

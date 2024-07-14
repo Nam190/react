@@ -1,59 +1,63 @@
-import React from 'react'
-import axios from '../api/lvnApi'
-export default function renderLvnListSinhVien({renderLvnListSinhVien, onLvnDelete}) {
-    console.log("LvnListSinhVien:",renderLvnListSinhVien);
-    // hiển thi đữ liệu
-    let lvnElementSinhVien = renderLvnListSinhVien.map((lvnSinhVien,index)=>{
-        return(
-                <tr key={index}>
-                    <td>{lvnSinhVien.id}</td>
-                    <td>{lvnSinhVien.MaSV}</td>
-                    <td>{lvnSinhVien.HoSV}</td>
-                    <td>{lvnSinhVien.TenSV}</td>
-                    <td>{lvnSinhVien.Phai}</td>
-                    <td>{lvnSinhVien.NgaySinh}</td>
-                    <td>{lvnSinhVien.NoiSinh}</td>
-                    <td>{lvnSinhVien.MaKH}</td>
-                    <td>{lvnSinhVien.HocBong}</td>
-                    <td>{lvnSinhVien.DiemTrungBinh}</td>
-                    <td>
-                        <button className='btn btn-danger' onClick={()=>lvnHandleDelete(lvnSinhVien)}> Delete </button>
-                    </td>
-                </tr>
-        )
-    })
- 
-    const lvnHandleDelete =  async (param)=>{
-        if(window.confirm('Bạn có muốn xóa thật không?')){
-            const lvnRes = await axios.delete("lvnSinhVien/"+param.id);
-        }
-        onLvnDelete();
-    }
-  return (
-    <div className='row'>
-        <div className='col-md-12'>
-            <table className='table table-bordered'>
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>MaSV</th>
-                        <th>HoSV</th>
-                        <th>TenSV</th>
-                        <th>Phai</th>
-                        <th>NgaySinh</th>
-                        <th>NoiSinh</th>
-                        <th>MaKH</th>
-                        <th>HocBong</th>
-                        <th>DiemTrungBinh</th>
-                        <th>Chức năng</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {lvnElementSinhVien}
-                </tbody>
+import React from 'react';
+import axios from '../api/lvnApi';
 
-            </table>
+export default function lvnListSinhVien({ renderlvnListSinhVien, onlvnDelete }) {
+    console.log("lvnListSinhVien:", renderlvnListSinhVien);
+
+    const lvnHandleDelete = async (param) => {
+        if (window.confirm("Bạn có muốn xóa không?")) {
+            try {
+                const response = await axios.delete("lvnSinhVien/" + param.MaSV);
+                console.log("Delete response:", response);
+                onlvnDelete();
+            } catch (error) {
+                console.error("Error deleting student:", error);
+            }
+        }
+    };
+
+    // Render the list of students
+    let lvnElementStudent = renderlvnListSinhVien.map((LVNSinhVien, index) => (
+        <tr key={index}>
+            <td>{LVNSinhVien.lvnMaSV}</td>
+            <td>{LVNSinhVien.lvnHoSV}</td>
+            <td>{LVNSinhVien.lvnTenSV}</td>
+            <td>{LVNSinhVien.lvnPhai ? 'Nam' : 'Nữ'}</td>
+            <td>{LVNSinhVien.lvnNgaySinh}</td>
+            <td>{LVNSinhVien.lvnNoiSinh}</td>
+            <td>{LVNSinhVien.lvnMaKH}</td>
+            <td>{LVNSinhVien.lvnHocBong}</td>
+            <td>{LVNSinhVien.lvnDiemTrungBinh}</td>
+            <td>
+                <button className='btn btn-success'>Edit</button>
+                <button className='btn btn-danger' onClick={() => lvnHandleDelete(LVNSinhVien)}>Remove</button>
+            </td>
+        </tr>
+    ));
+
+    return (
+        <div className='row'>
+            <div className='col-md-12'>
+                <table className='table table-bordered'>
+                    <thead>
+                        <tr>
+                            <th>MaSV</th>
+                            <th>HoSV</th>
+                            <th>TenSV</th>
+                            <th>Phai</th>
+                            <th>NgaySinh</th>
+                            <th>NoiSinh</th>
+                            <th>MaKH</th>
+                            <th>HocBong</th>
+                            <th>DiemTrungBinh</th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {lvnElementStudent}
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-  )
+    );
 }
